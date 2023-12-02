@@ -4,6 +4,8 @@ import { CATEGORIES } from '../../Categories';
 
 interface QuoteFormProps {
   onSubmit: () => void;
+  categories: string[];
+  authors: string[];
 }
 
 const QuoteForm: React.FC<QuoteFormProps> = ({ onSubmit }) => {
@@ -17,6 +19,12 @@ const QuoteForm: React.FC<QuoteFormProps> = ({ onSubmit }) => {
     try {
       const response = await axiosApi.post('quotes.json', { text, author, category });
       console.log('Quote added:', response.data);
+      const newQuoteId = response.data.name;
+
+      if (category) {
+        await axiosApi.post(`categories/${category}/quotes.json`, { id: newQuoteId });
+      }
+
       onSubmit();
       setText('');
       setAuthor('');

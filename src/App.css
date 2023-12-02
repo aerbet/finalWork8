@@ -2,10 +2,28 @@ body {
   text-align: center;
 }
 
+.font-header {
+  font-weight: 600 !important;
+}
+
 h1, h2, h3, h4 {
   text-align: center;
 }
 
 .btn {
   margin-left: 10px;
+}
+
+.app {
+  margin: 0 auto;
+  width: 900px;
+}
+
+.btn-citata {
+  margin: 20px 300px !important;
+  display: block !important;
+}
+
+.quotes-title {
+  margin: 20px 0 !important;
 }

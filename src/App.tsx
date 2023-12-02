@@ -17,14 +17,14 @@ const CATEGORIES = {
 
 const App: React.FC = () => {
   return (
-    <>
+    <div className="app">
       <Header categories={CATEGORIES} />
       <Routes>
         <Route path="/add" element={<AddQuote />} />
         <Route path="/all" element={<AllQuotes />} />
         <Route path="/edit/:quoteId" element={<EditQuote />} />
       </Routes>
-    </>
+    </div>
   );
 }
 

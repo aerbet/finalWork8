@@ -53,7 +53,7 @@ const AllQuotes: React.FC = () => {
 
   return (
     <div>
-      <h2>{category ? `Quotes - ${CATEGORIES.find((cat) => cat.id === category)?.title}` : 'All Quotes'}</h2>
+      <h2 className="quotes-title">{category ? `Quotes - ${CATEGORIES.find((cat) => cat.id === category)?.title}` : 'All Quotes'}</h2>
       {quotes.map((quote) => (
         <ShortQuote
           id={quote.id}
@@ -64,7 +64,7 @@ const AllQuotes: React.FC = () => {
           onEdit={(newText, newAuthor) => handleEdit(quote.id, newText, newAuthor)}
         />
       ))}
-      <Link to="/add" className="btn btn-primary mt-3">
+      <Link to="/add" className="btn btn-primary mt-3 btn-citata">
         Add New Quote
       </Link>
     </div>

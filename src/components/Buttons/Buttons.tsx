@@ -1,28 +1,21 @@
-import { Button } from 'reactstrap';
-import { Link } from 'react-router-dom';
-import React from "react";
-import {ButtonProps} from "../../types";
+import React from 'react';
 
-interface Props {
-  buttonProps: ButtonProps;
+interface ButtonsProps {
+  onEditClick: () => void;
+  onDeleteClick: () => void;
 }
-const EditButton: React.FC<Props> = ({ buttonProps }) => (
-  <Link to={`/quotes/${buttonProps}/edit`}>
-    <Button color="primary">Edit Post</Button>
-  </Link>
-);
 
-const DeleteButton = ({ id }: { id: string }) => (
-  <Link to={`/quotes/${id}/edit`}>
-    <Button color="danger">Delete Post</Button>
-  </Link>
-);
-
-const Buttons = ({ id }: { id: string }) => (
-  <>
-    <EditButton id={id} />
-    <DeleteButton id={id} />
-  </>
-);
+const Buttons: React.FC<ButtonsProps> = ({ onEditClick, onDeleteClick }) => {
+  return (
+    <div className="btn-group">
+      <button className="btn btn-secondary" onClick={onEditClick}>
+        Edit
+      </button>
+      <button className="btn btn-danger" onClick={onDeleteClick}>
+        Delete
+      </button>
+    </div>
+  );
+};
 
 export default Buttons;

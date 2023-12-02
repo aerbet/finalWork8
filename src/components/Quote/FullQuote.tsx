@@ -12,7 +12,6 @@ const FullQuoteList: React.FC<FullQuoteListProps> = ({ fullQuotes }) => {
   const [quotes, setQuotes] = useState<FullQuoteProps[]>([]);
 
   useEffect(() => {
-    // Fetch quotes based on the provided IDs
     const fetchQuotes = async () => {
       const quotesData = await Promise.all(
         fullQuotes.map(async (id) => {

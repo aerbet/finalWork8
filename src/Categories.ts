@@ -1,11 +1,7 @@
-interface CategoryMap {
-  [key: string]: string;
-}
-
-export const CATEGORIES: CategoryMap = {
-  'Star Wars': 'Star Wars',
-  'Famous people': 'Famous people',
-  Saying: 'Saying',
-  Humor: 'Humor',
-  Motivational: 'Motivational',
-};
+export const CATEGORIES = [
+  { title: 'Star Wars', id: 'star-wars' },
+  { title: 'Famous people', id: 'famous-people' },
+  { title: 'Saying', id: 'saying' },
+  { title: 'Humour', id: 'humour' },
+  { title: 'Motivational', id: 'motivational' },
+];

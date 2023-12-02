@@ -1,78 +1,84 @@
-import React, { useState, useEffect } from 'react';
-import { Button, Form, FormGroup, Input, Label } from 'reactstrap';
+import React, { useState } from 'react';
+import axiosApi from '../../axiosApi';
 import { CATEGORIES } from '../../Categories';
-import { QuotesForm } from "../../types";
 
-interface Props {
-  quoteForm: QuotesForm;
+interface QuoteFormProps {
+  onSubmit: () => void;
 }
 
-const QuoteForm: React.FC<Props> = ({ quoteForm }) => {
-  const [state, setState] = useState({
-    category: Object.keys(CATEGORIES)[0],
-    author: '',
-    quote: '',
-  });
+const QuoteForm: React.FC<QuoteFormProps> = ({ onSubmit }) => {
+  const [text, setText] = useState('');
+  const [author, setAuthor] = useState('');
+  const [category, setCategory] = useState('');
 
-  const valueChanged = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = event.target;
-    setState((prev) => ({ ...prev, [name]: value }));
-  };
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
 
-  const submitHandler = (event: React.FormEvent) => {
-    event.preventDefault();
-    quoteForm.submit({ ...state });
-  };
-
-  useEffect(() => {
-    if (quoteForm.data) {
-      setState((prev) => ({ ...prev, author: quoteForm.data.author, quote: quoteForm.data.quote }));
+    try {
+      const response = await axiosApi.post('quotes.json', { text, author, category });
+      console.log('Quote added:', response.data);
+      onSubmit();
+      setText('');
+      setAuthor('');
+      setCategory('');
+    } catch (error) {
+      console.error('Error adding quote:', error);
     }
-  }, [quoteForm.data]);
+  };
 
   return (
-    <Form onSubmit={submitHandler}>
-      <FormGroup>
-        <Label for="category">Category</Label>
-        <Input
-          type="select"
-          name="category"
-          id="category"
-          value={state.category}
-          onChange={valueChanged}
+    <form onSubmit={handleSubmit} className="mt-3">
+      <div className="mb-3">
+        <label htmlFor="quoteText" className="form-label">
+          Цитата:
+        </label>
+        <input
+          type="text"
+          className="form-control"
+          id="quoteText"
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          required
+        />
+      </div>
+      <div className="mb-3">
+        <label htmlFor="quoteAuthor" className="form-label">
+          Автор:
+        </label>
+        <input
+          type="text"
+          className="form-control"
+          id="quoteAuthor"
+          value={author}
+          onChange={(e) => setAuthor(e.target.value)}
+          required
+        />
+      </div>
+      <div className="mb-3">
+        <label htmlFor="quoteCategory" className="form-label">
+          Категория:
+        </label>
+        <select
+          className="form-select"
+          id="quoteCategory"
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
+          required
         >
-          {Object.keys(CATEGORIES).map((categoryId) => (
-            <option value={categoryId} key={categoryId}>
-              {CATEGORIES[categoryId]}
+          <option value="" disabled>
+            Выберите категорию
+          </option>
+          {CATEGORIES.map((cat) => (
+            <option key={cat.id} value={cat.id}>
+              {cat.title}
             </option>
           ))}
-        </Input>
-      </FormGroup>
-      <FormGroup>
-        <Label for="author">Author</Label>
-        <Input
-          type="text"
-          name="author"
-          id="author"
-          placeholder="Author"
-          value={state.author}
-          onChange={valueChanged}
-        />
-      </FormGroup>
-      <FormGroup>
-        <Label for="quote">Quote</Label>
-        <Input
-          type="textarea"
-          name="quote"
-          id="quote"
-          placeholder="Quote"
-          style={{ height: '300px' }}
-          value={state.quote}
-          onChange={valueChanged}
-        />
-      </FormGroup>
-      <Button>{quoteForm.data ? 'Update Quote' : 'Add Quote'}</Button>
-    </Form>
+        </select>
+      </div>
+      <button type="submit" className="btn btn-primary">
+        Добавить цитату
+      </button>
+    </form>
   );
 };
 

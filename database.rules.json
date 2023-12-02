@@ -1,0 +1,11 @@
+{
+  "rules": {
+    ".read": "auth == null",  // 2023-12-31
+    ".write": "auth == null",  // 2023-12-31
+    "quotes": {
+      ".indexOn": "category",
+      ".read": true,
+      ".write": "auth != null"
+    }
+  }
+}

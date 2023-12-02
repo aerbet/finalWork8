@@ -18,6 +18,9 @@ export interface QuotesForm {
   author: string;
 }
 
-export interface ButtonProps {
+export interface AllQuotes {
   id: string;
+  category: string;
+  quote: string;
+  author: string;
 }

@@ -1,24 +1,31 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { Container } from 'reactstrap';
 import Header from './components/Header/Header';
+import AddQuote from './containers/AddQuote/AddQuote';
+import AllQuotes from './containers/AllQuotes/AllQuotes';
+import EditQuote from './containers/EditQuote/EditQuote';
+
 import './App.css';
-import FullQuote from './components/Quote/FullQuote';
+
+const CATEGORIES = {
+  'Star Wars': 'Звездные войны',
+  'Famous people': 'Известные личности',
+  'Saying': 'Высказывания',
+  'Humor': 'Юмор',
+  'Motivational': 'Мотивационные',
+};
 
 const App: React.FC = () => {
   return (
-    <div className="App">
-      <Header />
-      <Container>
-        <Routes>
-          <Route path="/quotes/:id" element={<FullQuote />} />
-          <Route path="/quotes/:id/:category/:author/:quote" element={<FullQuote />} />
-          <Route path="/about" element={<h1>About</h1>} />
-          <Route path="/contact" element={<FullQuote />} />
-        </Routes>
-      </Container>
-    </div>
+    <>
+      <Header categories={CATEGORIES} />
+      <Routes>
+        <Route path="/add" element={<AddQuote />} />
+        <Route path="/all" element={<AllQuotes />} />
+        <Route path="/edit/:quoteId" element={<EditQuote />} />
+      </Routes>
+    </>
   );
-};
+}
 
 export default App;
